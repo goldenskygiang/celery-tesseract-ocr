@@ -1,4 +1,3 @@
-from app.api.deps import get_db
 from app.services.ocr import tasks as ocr
 from app.celery import celeryapp
 
