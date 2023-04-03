@@ -1,10 +1,11 @@
 from app.api.deps import get_db
 from app.services.ocr import tasks as ocr
-from app.models.image import TaskResult
+from app.celery import celeryapp
 
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 from PIL import Image
+from celery.result import AsyncResult
 
 import os
 import uuid
@@ -12,10 +13,12 @@ import uuid
 router = APIRouter()
 
 @router.get('/{id}')
-def get_ocr(id: str, db: Session = Depends(get_db)):
-    obj = db.query(TaskResult).filter(TaskResult.task_id == id).first()
-    print(obj)
-    return obj.result
+def get_ocr(id: str):
+    obj = ocr.extract_ocr.AsyncResult(id)
+    if obj.ready():
+        return obj.get()
+    else:
+        raise HTTPException(404, 'not found or processed yet')
 
 @router.post('/')
 def upload_img(file: UploadFile):
