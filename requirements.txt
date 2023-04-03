@@ -21,7 +21,6 @@ MarkupSafe==2.1.2
 packaging==23.0
 Pillow==9.5.0
 prompt-toolkit==3.0.38
-psycopg2==2.9.5
 pydantic==1.10.7
 pytesseract==0.3.10
 python-multipart==0.0.6
