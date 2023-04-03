@@ -13,7 +13,7 @@ router = APIRouter()
 
 @router.get('/{id}')
 def get_ocr(id: str):
-    obj = ocr.extract_ocr.AsyncResult(id)
+    obj = AsyncResult(id, app=celeryapp)
     if obj.ready():
         return obj.get()
     else:
