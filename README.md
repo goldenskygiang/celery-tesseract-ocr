@@ -15,3 +15,16 @@ sudo apt install tesseract-ocr
 `GET /images/:id`: get image and its text using the ID.
 
 `POST /images`: post an image, return its ID for further lookup.
+
+## How to run
+
+Open a terminal session then type
+```
+celery -A app worker --loglevel=INFO
+```
+
+Open another session and type
+
+```
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
