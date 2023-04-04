@@ -12,5 +12,4 @@ def get_app() -> FastAPI:
 app = get_app()
 
 if __name__ == 'main':
-    celeryapp.start()
     uvicorn.run(app, host='0.0.0.0', port=8080)

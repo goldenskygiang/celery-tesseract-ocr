@@ -1,0 +1,35 @@
+version: '3.4'
+volumes:
+  redis:
+  data:
+
+services:
+  redis:
+    container_name: redis
+    image: redis:latest
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+  ocr_web:
+    container_name: web
+    image: ocr_web
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    user: appuser
+    volumes:
+      - data:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+  worker:
+    container_name: worker
+    image: worker
+    build: .
+    command: celery -A app worker --loglevel=INFO &
+    volumes:
+      - data:/app
+    depends_on:
+      - redis
