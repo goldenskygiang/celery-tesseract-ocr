@@ -28,3 +28,5 @@ Open another session and type
 ```
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+Or, just type `docker compose up` since I have updated Docker scripts.
