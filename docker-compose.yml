@@ -1,14 +1,11 @@
 version: '3.4'
 volumes:
-  redis:
   data:
 
 services:
   redis:
     container_name: redis
     image: redis:latest
-    volumes:
-      - redis:/data
     ports:
       - 6379:6379
   ocr_web:
